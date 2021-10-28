@@ -1,0 +1,5 @@
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/CMakeFiles/VectorNormalization.dir
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/CMakeFiles/FalseSharing.dir
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/CMakeFiles/MergeSort.dir

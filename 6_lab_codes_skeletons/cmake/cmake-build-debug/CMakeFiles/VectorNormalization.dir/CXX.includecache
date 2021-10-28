@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/Utils.hpp
+random
+-
+algorithm
+-
+chrono
+-
+
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/VectorNormalization.cpp
+iostream
+-
+vector
+-
+omp.h
+-
+cmath
+-
+Utils.hpp
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/Utils.hpp
+

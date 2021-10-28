@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/japaw/Codes/B4M35PAG/5_lab_codes_skeletons/src/HelloWorld.cpp
+iostream
+-
+vector
+-
+omp.h
+-
+

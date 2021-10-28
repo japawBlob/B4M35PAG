@@ -1,0 +1,1 @@
+/bin/c++  -fopenmp -g CMakeFiles/MonteCarloPi.dir/home/japaw/Codes/B4M35PAG/5_lab_codes_skeletons/src/MonteCarloPi.cpp.o -o MonteCarloPi 

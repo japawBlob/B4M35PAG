@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/MergeSort.cpp
+iostream
+-
+vector
+-
+omp.h
+-
+cmath
+-
+algorithm
+-
+Utils.hpp
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/Utils.hpp
+
+/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/Utils.hpp
+random
+-
+algorithm
+-
+chrono
+-
+

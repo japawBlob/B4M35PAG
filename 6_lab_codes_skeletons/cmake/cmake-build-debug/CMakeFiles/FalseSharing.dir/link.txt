@@ -1,0 +1,1 @@
+/bin/c++  -fopenmp -g CMakeFiles/FalseSharing.dir/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/FalseSharing.cpp.o -o FalseSharing 

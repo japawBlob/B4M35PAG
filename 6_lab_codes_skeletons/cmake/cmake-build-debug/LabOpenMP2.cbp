@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="LabOpenMP2"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="VectorNormalization">
+				<Option output="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/VectorNormalization" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 VectorNormalization"/>
+					<CompileFile command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="VectorNormalization/fast">
+				<Option output="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/VectorNormalization" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 VectorNormalization/fast"/>
+					<CompileFile command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="FalseSharing">
+				<Option output="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/FalseSharing" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 FalseSharing"/>
+					<CompileFile command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="FalseSharing/fast">
+				<Option output="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/FalseSharing" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 FalseSharing/fast"/>
+					<CompileFile command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="MergeSort">
+				<Option output="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/MergeSort" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 MergeSort"/>
+					<CompileFile command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="MergeSort/fast">
+				<Option output="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/MergeSort" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 MergeSort/fast"/>
+					<CompileFile command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/gmake -j4 -f &quot;/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/FalseSharing.cpp">
+			<Option target="FalseSharing"/>
+		</Unit>
+		<Unit filename="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/MergeSort.cpp">
+			<Option target="MergeSort"/>
+		</Unit>
+		<Unit filename="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/src/VectorNormalization.cpp">
+			<Option target="VectorNormalization"/>
+		</Unit>
+		<Unit filename="/home/japaw/Codes/B4M35PAG/6_lab_codes_skeletons/cmake/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
