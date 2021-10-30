@@ -1,0 +1,25 @@
+for k = 0 to n-1 do
+	for j = k to n-1 do
+		u(kj) = a(kj){k}
+	l(kk) = 1
+	for i = k + 1 to n-1 do
+		l(ik)=a(ik){k}/u(kk)
+	for i = k+1 to n-1 do
+		for j = k+1 to n-1 do
+			a(ij){k+1}=a(ij){k}-l(ik)u(kj)
+
+nejvic casu se s
+
+I can do 2 a 5 se daji delat soucasne, pokud vytahnu u(kk) z 2 forcyklua udelam to mezi 1 a 2
+
+P5eps8n9 psudokodu - (vyhodit 4 radek)
+Cache optimalization
+
+l matrix - tranzponovat (neni to nejlepsi napad)
+
+udelat si z trojuhelnikove matice symetrickou matici a(ij) = a(ji)
+
+
+SEM
+ud2lat levenstein dist vsech paru - udelat graf a potom udelat minimum spanning tree.
+Treba grafik

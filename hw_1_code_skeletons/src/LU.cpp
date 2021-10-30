@@ -43,7 +43,21 @@ public:
     }
 
     void decompose() {
-        // TODO: Implement a parallel LU decomposition (i.e., fill L and U members of this class instance).
+        auto n = A.size();
+        for (int k = 0; k < n; ++k) {
+            for (int j = k; j < n; ++j) {
+                U[k][j] = A[k][j];
+            }
+            L[k][k] = 1;
+            for (int i = k+1; i < n; ++i) {
+                L[i][k] = A[i][k] / U[k][k];
+            }
+            for (int i = k+1; i < n; ++i) {
+                for (int j = k+1; j < n; ++j) {
+                    A[i][j] = A[i][j] - L[i][k] * U[k][j];
+                }
+            }
+        }
     }
 
 private:
