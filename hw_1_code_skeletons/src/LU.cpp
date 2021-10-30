@@ -42,6 +42,24 @@ public:
         }
     }
 
+    /*void decompose() {
+        auto n = A.size();
+        for (int k = 0; k < n; ++k) {
+            auto devider = U[k][k];
+            U[k][k] = A[k][k];
+//#pragma omp parallel for
+            for (int j = k+1; j < n; ++j) {
+                U[k][j] = A[k][j];
+                L[j][k] = A[j][k] / devider;
+            }
+            L[k][k] = 1;
+            for (int i = k+1; i < n; ++i) {
+                for (int j = k+1; j < n; ++j) {
+                    A[i][j] = A[i][j] - L[i][k] * U[k][j];
+                }
+            }
+        }
+    }*/
     void decompose() {
         auto n = A.size();
         for (int k = 0; k < n; ++k) {
