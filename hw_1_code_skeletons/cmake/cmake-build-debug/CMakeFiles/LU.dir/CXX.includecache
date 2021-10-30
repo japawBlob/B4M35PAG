@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/japaw/Codes/B4M35PAG/hw_1_code_skeletons/src/LU.cpp
+chrono
+-
+iomanip
+-
+iostream
+-
+fstream
+-
+stdexcept
+-
+string
+-
+functional
+-
+vector
+-
+
