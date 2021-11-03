@@ -23,4 +23,8 @@ functional
 -
 vector
 -
+omp.h
+-
+thread
+-
 
