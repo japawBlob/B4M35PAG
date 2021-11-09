@@ -1,4 +1,0 @@
-/home/japaw/Codes/B4M35PAG/hw_1_code_skeletons/cmake/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/japaw/Codes/B4M35PAG/hw_1_code_skeletons/cmake/cmake-build-debug/CMakeFiles/LU.dir
-/home/japaw/Codes/B4M35PAG/hw_1_code_skeletons/cmake/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/japaw/Codes/B4M35PAG/hw_1_code_skeletons/cmake/cmake-build-debug/CMakeFiles/InstanceGenerator.dir

@@ -6,6 +6,10 @@
 #include <string>
 #include <functional>
 #include <vector>
+<<<<<<< HEAD
+=======
+#include <omp.h>
+>>>>>>> ddb049ab6f262d2f5bccc3f2cd27ce27be0737bf
 #include <thread>
 
 using namespace std;
@@ -64,6 +68,8 @@ public:
     }*/
     void decompose() {
         auto n = A.size();
+        bool blob = true;
+#pragma omp parallel for shared (A,L,U)
         for (int k = 0; k < n; ++k) {
             U[k][k] = A[k][k];
             auto devider = U[k][k];
@@ -92,7 +98,7 @@ public:
                 start += chunkSize;
                 end += chunkSize;
             }*/
-            //thirdPart(k, n, k+1+start, n);
+            thirdPart(k, n, k+1+start, n);
             /*thirdPart(k, n, k+1+start, start + chunkSize);
             start += chunkSize-1;
             thirdPart(k, n, k+1+start, n);*/

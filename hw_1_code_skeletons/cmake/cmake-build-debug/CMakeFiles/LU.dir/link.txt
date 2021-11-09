@@ -1,1 +1,0 @@
-/usr/bin/c++  -Ofast -march=native -g CMakeFiles/LU.dir/home/japaw/Codes/B4M35PAG/hw_1_code_skeletons/src/LU.cpp.o -o LU  -lpthread 
