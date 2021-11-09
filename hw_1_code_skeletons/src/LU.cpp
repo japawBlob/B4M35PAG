@@ -6,10 +6,7 @@
 #include <string>
 #include <functional>
 #include <vector>
-<<<<<<< HEAD
-=======
 #include <omp.h>
->>>>>>> ddb049ab6f262d2f5bccc3f2cd27ce27be0737bf
 #include <thread>
 
 using namespace std;
