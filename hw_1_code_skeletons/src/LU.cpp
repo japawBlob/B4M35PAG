@@ -6,9 +6,12 @@
 #include <string>
 #include <functional>
 #include <vector>
+#include <thread>
 
 using namespace std;
 using namespace std::chrono;
+
+int blob = 0;
 
 class LU {
 public:
@@ -41,18 +44,17 @@ public:
             bout.write((char *) U[r].data(), n * sizeof(double));
         }
     }
-
-    /*void decompose() {
+ /*   void decompose() {
         auto n = A.size();
         for (int k = 0; k < n; ++k) {
-            auto devider = U[k][k];
-            U[k][k] = A[k][k];
-//#pragma omp parallel for
-            for (int j = k+1; j < n; ++j) {
+            for (int j = k; j < n; ++j) {
                 U[k][j] = A[k][j];
-                L[j][k] = A[j][k] / devider;
             }
             L[k][k] = 1;
+            for (int i = k+1; i < n; ++i) {
+                L[i][k] = A[i][k] / U[k][k];
+
+            }
             for (int i = k+1; i < n; ++i) {
                 for (int j = k+1; j < n; ++j) {
                     A[i][j] = A[i][j] - L[i][k] * U[k][j];
@@ -63,20 +65,40 @@ public:
     void decompose() {
         auto n = A.size();
         for (int k = 0; k < n; ++k) {
-            for (int j = k; j < n; ++j) {
-                U[k][j] = A[k][j];
-            }
+            U[k][k] = A[k][k];
+            auto devider = U[k][k];
+
+
+
+
+            //thread thread2(&LU::secondPart, this, k, n, devider);
+            //thread thread1(&LU::firstPart, this, k, n);
+            firstPart(k, n);
+            secondPart(k, n, devider);
             L[k][k] = 1;
-            for (int i = k+1; i < n; ++i) {
-                L[i][k] = A[i][k] / U[k][k];
-            }
-            for (int i = k+1; i < n; ++i) {
-                for (int j = k+1; j < n; ++j) {
-                    A[i][j] = A[i][j] - L[i][k] * U[k][j];
-                }
-            }
+            //thread1.join();
+            //thread2.join();
+
+
+            //secondPart(k, n, devider);
+            //unsigned numberOfThreads = 2/*thread::hardware_concurrency()*/;
+            //unsigned chunkSize = n/numberOfThreads;
+            //cout << chunkSize << endl;
+            unsigned chunkSize = n/2;
+            int start = 0, end = chunkSize;
+
+            /*for (int i = 0; i < numberOfThreads-1; ++i) {
+                thirdPart(k, n, start, end);
+                start += chunkSize;
+                end += chunkSize;
+            }*/
+            //thirdPart(k, n, k+1+start, n);
+            /*thirdPart(k, n, k+1+start, start + chunkSize);
+            start += chunkSize-1;
+            thirdPart(k, n, k+1+start, n);*/
         }
     }
+
 
 private:
 
@@ -85,6 +107,29 @@ private:
     vector<vector<double>> U;
 
     friend ostream &operator<<(ostream &, const LU &);
+
+    void firstPart(int k, unsigned n){
+        for (int j = k+1; j < n; ++j) {
+            U[k][j] = A[k][j];
+        }
+    }
+    void secondPart(int k, unsigned n, double devider){
+        for (int i = k+1; i < n; ++i) {
+            //L[i][k] = A[i][k] / devider;
+            L[k][i] = A[i][k] / devider;
+        }
+    }
+    void thirdPart(int k, unsigned n, int start, int end){
+        for (int i = start; i < end; ++i) {
+            cout << "i: " << i << endl;
+            for (int j = k+1; j < n; ++j) {
+                A[i][j] = A[i][j] - L[k][i] * U[k][j];
+                //cout << "here" << blob++ << endl;
+            }
+        }
+        cout << "end" << endl;
+        blob = 0;
+    }
 };
 
 // Print the matrices A, L, and U of an LU class instance.
