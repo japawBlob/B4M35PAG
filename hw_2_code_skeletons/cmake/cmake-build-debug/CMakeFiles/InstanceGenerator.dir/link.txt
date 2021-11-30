@@ -1,0 +1,1 @@
+/usr/bin/c++  -fopenmp -fopt-info-vec -fopt-info-vec-missed -Ofast -march=native -g CMakeFiles/InstanceGenerator.dir/home/japaw/Codes/B4M35PAG/hw_2_code_skeletons/src/InstanceGenerator.cpp.o -o InstanceGenerator 

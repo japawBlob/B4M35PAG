@@ -12,6 +12,7 @@
 #include <tuple>
 #include <vector>
 #include <stdint.h>
+#include <limits>
 
 using namespace std;
 using namespace std::chrono;
@@ -23,15 +24,42 @@ struct Point {
 
 // A Dynamic programming based function to find minimum cost for convex polygon triangulation.
 // points: vector of points of the convex polygon in counter-clockwise order.
+float dist(Point first, Point second){
+    return sqrt(first.x+second.x + first.y+second.y);
+}
+
 tuple<vector<tuple<int, int, int>>, float> triangulate(const vector<Point> &points) {
 	float triagCost = 0.0f;
 	vector<tuple<int, int, int>> triangles;
 
+    vector<vector<float>> C;
+    vector<vector<tuple<int, int, int>>> trigs;
+    unsigned n = points.size();
+    C.assign(n, std::vector<float>(n, 0.0f));
 	// TODO: Implement a parallel dynamic programming approach for triangulation.
 	// Fill variables triagCost and triangles.
 	// triagCost: the cost of the triangulation.
 	// triangles: vector of triangles. Each triangle is represented by indices (into points vector) of its corner points.
 
+
+    for (int diff = 0; diff < n; ++diff) {
+        int i = 0;
+        for (int j = diff; j < n; i++, j++) {
+            if(j < i+2){
+                C[i][j] = 0.0;
+            } else {
+                C[i][j] = numeric_limits<float>::max();
+                for (int k = i+1; k < j; ++k) {
+                    float cost = C[i][j]+C[k][j]+dist(points[i],points[k])+dist(points[k],points[j])+dist(points[j],points[i]);
+                    if(C[i][j] > cost){
+                        C[i][j] = cost;
+                        
+                    }
+                }
+            }
+        }
+    }
+    triagCost = C[0][n-1];
 	return make_tuple(move(triangles), triagCost);
 }
 

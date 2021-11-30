@@ -6,13 +6,16 @@
 #include <string>
 #include <functional>
 #include <vector>
-#include <omp.h>
 #include <thread>
+#include <algorithm>
+#include <condition_variable>
+#include <mutex>
+#include <atomic>
+
 
 using namespace std;
 using namespace std::chrono;
 
-int blob = 0;
 
 class LU {
 public:
@@ -45,7 +48,10 @@ public:
             bout.write((char *) U[r].data(), n * sizeof(double));
         }
     }
- /*   void decompose() {
+
+    /// Přikládám i funkci Decompose1, kte je nezdařilý pokus o paralelizaci. Bohužel jsem si ji nechal na poslední chvíli.
+    /// Příště budu pečlivější...:)
+    void decompose() {
         auto n = A.size();
         for (int k = 0; k < n; ++k) {
             for (int j = k; j < n; ++j) {
@@ -54,7 +60,6 @@ public:
             L[k][k] = 1;
             for (int i = k+1; i < n; ++i) {
                 L[i][k] = A[i][k] / U[k][k];
-
             }
             for (int i = k+1; i < n; ++i) {
                 for (int j = k+1; j < n; ++j) {
@@ -62,43 +67,92 @@ public:
                 }
             }
         }
-    }*/
-    void decompose() {
+    }
+    mutex mut;
+    mutex mut2;
+    condition_variable cv;
+    bool ready = false;
+    bool fine = false;
+    unsigned numberOfThreads;
+
+    void print_id (int id) {
+        std::unique_lock<std::mutex> lck(mut);
+        while (!ready) cv.wait(lck);
+        // ...
+        std::cout << "thread " << id << '\n';
+    }
+
+    void decompose1() {
+        mut2.lock();
         auto n = A.size();
-        bool blob = true;
-#pragma omp parallel for shared (A,L,U)
+        //std::unique_lock<std::mutex> lck(mut);
+        numberOfThreads = thread::hardware_concurrency();
+        cout << "number of threads " << numberOfThreads << endl;
+
+        thread threads[numberOfThreads];
+
+        while (n < numberOfThreads){
+            numberOfThreads = numberOfThreads/2;
+            if(numberOfThreads == 0){
+                numberOfThreads = 1;
+                break;
+            }
+        }
+        int chunkSize = n/numberOfThreads;
+        int start = 1;
+        int end = start + chunkSize;
+        int threadNumber;
+        for (threadNumber = 0; threadNumber < numberOfThreads-1; ++threadNumber) {
+            cout << "thread created" << endl;
+            if(end > n) end = n;
+            if (start>end) break;
+            threads[threadNumber] = thread(&LU::thirdPart, this, 1, n, start, end);
+            //threads[threadNumber] = thread(&LU::print_id, this, threadNumber);
+
+            start += chunkSize;
+            end += chunkSize;
+        }
+        threads[threadNumber] = thread(&LU::thirdPart, this, 1, n, start, n);
+        //threads[threadNumber] = thread(&LU::print_id, this, threadNumber);
+
+
+
         for (int k = 0; k < n; ++k) {
             U[k][k] = A[k][k];
             auto devider = U[k][k];
-
-
-
-
-            //thread thread2(&LU::secondPart, this, k, n, devider);
-            //thread thread1(&LU::firstPart, this, k, n);
             firstPart(k, n);
             secondPart(k, n, devider);
             L[k][k] = 1;
-            //thread1.join();
-            //thread2.join();
 
 
-            //secondPart(k, n, devider);
-            //unsigned numberOfThreads = 2/*thread::hardware_concurrency()*/;
-            //unsigned chunkSize = n/numberOfThreads;
-            //cout << chunkSize << endl;
-            unsigned chunkSize = n/2;
-            int start = 0, end = chunkSize;
+            cout << "here " << endl;
+            ready = true;
+            cv.notify_all();
+            mut2.lock();
+            cout << "here " << endl;
 
-            /*for (int i = 0; i < numberOfThreads-1; ++i) {
-                thirdPart(k, n, start, end);
-                start += chunkSize;
-                end += chunkSize;
-            }*/
-            thirdPart(k, n, k+1+start, n);
-            /*thirdPart(k, n, k+1+start, start + chunkSize);
-            start += chunkSize-1;
-            thirdPart(k, n, k+1+start, n);*/
+            //thirdPart(k, n, start, n);
+            //thread thread2(&LU::thirdPart, this, k, n, start, end);
+            //thread thread3(&LU::thirdPart, this, k, n, start, end);
+            //thread thread4(&LU::thirdPart, this, k, n, start, end);
+            //thread thread5(&LU::thirdPart, this, k, n, start, n);
+
+            /*thread2.join();
+            thread3.join();
+            thread4.join();
+            thread5.join();*/
+        }
+        fine = true;
+        cv.notify_all();
+        for (int i=0; i<numberOfThreads; ++i) {
+            threads[i].join();
+        }
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = i+1; j < n; ++j) {
+                L[j][i] = L[i][j];
+                L[i][j] = 0;
+            }
         }
     }
 
@@ -122,16 +176,41 @@ private:
             L[k][i] = A[i][k] / devider;
         }
     }
+    mutex mut3;
+    unsigned barrierCounter = 0;
+    condition_variable barrier;
+
     void thirdPart(int k, unsigned n, int start, int end){
-        for (int i = start; i < end; ++i) {
-            cout << "i: " << i << endl;
-            for (int j = k+1; j < n; ++j) {
-                A[i][j] = A[i][j] - L[k][i] * U[k][j];
-                //cout << "here" << blob++ << endl;
+        std::unique_lock<std::mutex> lck(mut);
+        std::unique_lock<std::mutex> lk(mut3);
+        cout << "blobanec "  << endl;
+        lk.unlock();
+        while(!fine){
+            while (!ready) cv.wait(lck);
+            if (fine){
+                break;
             }
+            cout << "I am thread " << endl;
+            lck.unlock();
+            for (int i = start; i < end; ++i) {
+                cout << "i: " << i << endl;
+                for (int j = k + 1; j < n; ++j) {
+                    A[i][j] = A[i][j] - L[k][i] * U[k][j];
+                    //A[i][j] = A[i][j] - L[i][k] * U[k][j];
+                }
+            }
+            lk.lock();
+            ready = false;
+            barrierCounter++;
+            cout << "barCounter : " << barrierCounter << endl;
+            if(barrierCounter == numberOfThreads){
+                mut2.unlock();
+                barrierCounter = 0;
+            }
+            lk.unlock();
+            cout << "here : " << endl;
+            k++;
         }
-        cout << "end" << endl;
-        blob = 0;
     }
 };
 
