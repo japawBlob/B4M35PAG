@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940">
+	<polygon points="0,528.16 389.051,758.428 485.239,0" style="fill:orange;stroke:black;stroke-width=0.3"/>
+	<polygon points="0,528.16 485.239,0 329.061,26.3351" style="fill:brown;stroke:black;stroke-width=0.3"/>
+	<polygon points="485.239,0 389.051,758.428 879.998,901.436" style="fill:red;stroke:black;stroke-width=0.3"/>
+	<polygon points="485.239,0 879.998,901.436 1600,931.432" style="fill:darksalmon;stroke:black;stroke-width=0.3"/>
+	<polygon points="1600,931.432 879.998,901.436 1359.82,939.973" style="fill:yellow;stroke:black;stroke-width=0.3"/>
+	<polygon points="879.998,901.436 389.051,758.428 435.281,783.235" style="fill:purple;stroke:black;stroke-width=0.3"/>
+	<line x1="0" y1="528.16" x2="329.061" y2="26.3351" stroke-width="2" stroke="black"/>
+	<line x1="329.061" y1="26.3351" x2="485.239" y2="0" stroke-width="2" stroke="black"/>
+	<line x1="485.239" y1="0" x2="1600" y2="931.432" stroke-width="2" stroke="black"/>
+	<line x1="1600" y1="931.432" x2="1359.82" y2="939.973" stroke-width="2" stroke="black"/>
+	<line x1="1359.82" y1="939.973" x2="879.998" y2="901.436" stroke-width="2" stroke="black"/>
+	<line x1="879.998" y1="901.436" x2="435.281" y2="783.235" stroke-width="2" stroke="black"/>
+	<line x1="435.281" y1="783.235" x2="389.051" y2="758.428" stroke-width="2" stroke="black"/>
+	<line x1="389.051" y1="758.428" x2="0" y2="528.16" stroke-width="2" stroke="black"/>
+</svg>

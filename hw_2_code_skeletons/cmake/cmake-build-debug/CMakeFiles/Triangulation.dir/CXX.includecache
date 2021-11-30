@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/japaw/Codes/B4M35PAG/hw_2_code_skeletons/src/Triangulation.cpp
+algorithm
+-
+array
+-
+chrono
+-
+cmath
+-
+cstdlib
+-
+iostream
+-
+fstream
+-
+random
+-
+string
+-
+omp.h
+-
+stdexcept
+-
+tuple
+-
+vector
+-
+stdint.h
+-
+limits
+-
+
