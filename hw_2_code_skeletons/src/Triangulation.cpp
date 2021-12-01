@@ -29,44 +29,54 @@ float dist(Point first, Point second){
 }
 
 tuple<vector<tuple<int, int, int>>, float> triangulate(const vector<Point> &points) {
-	float triagCost = 0.0f;
-	vector<tuple<int, int, int>> triangles;
+    float triagCost = 0.0f;
+    vector<tuple<int, int, int>> triangles;
 
     unsigned n = points.size();
-    vector<vector<float>> C (n, std::vector<float>(n, 0.0f));
-    vector<vector<vector<tuple<int, int, int>>>> trigs (n, vector<vector<tuple<int, int, int>>> (n, vector<tuple<int, int, int>>(1,
-            make_tuple(0,0,0))) );
+    vector<vector<float>> C(n, std::vector<float>(n, 0.0f));
+    vector<vector<vector<tuple<int, int, int>>>> trigs(n, vector<vector<tuple<int, int, int>>>(n,
+                                                                                               vector<tuple<int, int, int>>(
+                                                                                                       1,
+                                                                                                       make_tuple(0, 0,
+                                                                                                                  0))));
     //C.assign(n, std::vector<float>(n, 0.0f));
     //trigs.assign(n, vector<tuple<int, int, int>>(n, make_tuple(0,0,0)));
-	// TODO: Implement a parallel dynamic programming approach for triangulation.
-	// Fill variables triagCost and triangles.
-	// triagCost: the cost of the triangulation.
-	// triangles: vector of triangles. Each triangle is represented by indices (into points vector) of its corner points.
-#pragma omp single
-    for (int diff = 0; diff < n; ++diff) {
-        int i = 0;
-        for (int j = diff; j < n; i++, j++) {
-            if(j < i+2){
-                C[i][j] = 0.0;
-            } else {
-                C[i][j] = numeric_limits<float>::max();
-                for (int k = i+1; k < j; ++k) {
-                    float cost = C[i][k]+C[k][j]+dist(points[i],points[k])+dist(points[k],points[j])+dist(points[j],points[i]);
-                    if(C[i][j] > cost) {
-                        C[i][j] = cost;
-                        trigs[i][j].clear();
-                        trigs[i][j].push_back(make_tuple(i, j, k));
-                        if (C[i][k] != 0.0) {
-                            trigs[i][j].insert(trigs[i][j].end(), trigs[i][k].begin(), trigs[i][k].end());
-                        }
-                        if (C[k][j] != 0.0) {
-                            trigs[i][j].insert(trigs[i][j].end(), trigs[k][j].begin(), trigs[k][j].end());
+    // TODO: Implement a parallel dynamic programming approach for triangulation.
+    // Fill variables triagCost and triangles.
+    // triagCost: the cost of the triangulation.
+    // triangles: vector of triangles. Each triangle is represented by indices (into points vector) of its corner points.
+        for (int diff = 0; diff < n; ++diff) {
+            int i = 0;
+            for (int j = diff; j < n; i++, j++) {
+                if (j < i + 2) {
+                    C[i][j] = 0.0;
+                } else {
+                    C[i][j] = numeric_limits<float>::max();
+                    #pragma omp parallel for schedule(static) shared(C,trigs)
+                    for (int k = i + 1; k < j; ++k) {
+                        float cost = C[i][k] + C[k][j] + dist(points[i], points[k]) + dist(points[k], points[j]) +
+                                     dist(points[j], points[i]);
+                        if (C[i][j] > cost) {
+                            #pragma omp critical
+                            {
+                                if (C[i][j] > cost) {
+                                    C[i][j] = cost;
+                                    trigs[i][j].clear();
+                                    trigs[i][j].push_back(make_tuple(i, j, k));
+                                    if (C[i][k] != 0.0) {
+                                        trigs[i][j].insert(trigs[i][j].end(), trigs[i][k].begin(), trigs[i][k].end());
+                                    }
+                                    if (C[k][j] != 0.0) {
+                                        trigs[i][j].insert(trigs[i][j].end(), trigs[k][j].begin(), trigs[k][j].end());
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-    }
+
     triagCost = C[0][n-1];
     triangles = trigs[0][n-1];
 	return make_tuple(move(triangles), triagCost);
