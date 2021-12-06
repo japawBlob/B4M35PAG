@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/japaw/Codes/B4M35PAG/hw_2_code_skeletons/src/Triangulation.cpp
+/mnt/c/Users/JakubJíra/Codes/B4M35PAG/hw_2_code_skeletons/src/Triangulation.cpp
 algorithm
 -
 array
@@ -36,5 +36,7 @@ vector
 stdint.h
 -
 limits
+-
+iomanip
 -
 
