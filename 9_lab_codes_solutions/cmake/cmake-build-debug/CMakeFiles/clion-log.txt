@@ -1,0 +1,19 @@
+/snap/clion/175/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/175/bin/ninja/linux/ninja -DCMAKE_BUILD_TYPE=DEBUG -DMPI_CXX_COMPILER=/usr/bin/mpicxx -DMPI_C_COMPILER=/usr/bin/mpicc -DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec -G Ninja /home/japaw/Codes/B4M35PAG/9_lab_codes_solutions/cmake
+-- The C compiler identification is GNU 10.3.0
+-- The CXX compiler identification is GNU 10.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found MPI_C: /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so (found version "3.1") 
+-- Found MPI_CXX: /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so (found version "3.1") 
+-- Found MPI: TRUE (found version "3.1")  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/japaw/Codes/B4M35PAG/9_lab_codes_solutions/cmake/cmake-build-debug

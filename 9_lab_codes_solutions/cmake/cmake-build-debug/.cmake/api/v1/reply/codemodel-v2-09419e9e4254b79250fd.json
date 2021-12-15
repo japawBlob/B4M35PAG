@@ -1,0 +1,87 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-DEBUG-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "DEBUG",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "LabMPI",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "HelloWorld::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HelloWorld-DEBUG-e0556b20a51c43b2441d.json",
+					"name" : "HelloWorld",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Iddqd::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Iddqd-DEBUG-83945e72299f768cae47.json",
+					"name" : "Iddqd",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Idkfa::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Idkfa-DEBUG-6e13c76d4f2a348b4733.json",
+					"name" : "Idkfa",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VectorNormalization::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VectorNormalization-DEBUG-6ffc9386ebc316c68f89.json",
+					"name" : "VectorNormalization",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/japaw/Codes/B4M35PAG/9_lab_codes_solutions/cmake/cmake-build-debug",
+		"source" : "/home/japaw/Codes/B4M35PAG/9_lab_codes_solutions/cmake"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
