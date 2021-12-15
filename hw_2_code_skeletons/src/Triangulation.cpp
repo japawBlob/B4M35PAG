@@ -13,6 +13,7 @@
 #include <vector>
 #include <stdint.h>
 #include <limits>
+#include <iomanip>
 
 using namespace std;
 using namespace std::chrono;
@@ -28,59 +29,113 @@ float dist(Point first, Point second){
     return sqrt(powf(first.x-second.x, 2) + powf(first.y-second.y,2));
 }
 
+
+struct trigNode {
+    tuple<int, int, int> newTrig;
+    trigNode* IK;
+    trigNode* KJ;
+};
+
+struct compare {
+    float cost;
+    int index;
+};
+
+void searchRecu (vector<tuple<int,int,int>> &ret, const trigNode* root){
+    if(std::get<0>(root->newTrig) != -1){
+        ret.push_back(root->newTrig);
+    }
+    if(root->IK != nullptr) searchRecu(ret, root->IK);
+    if(root->KJ != nullptr) searchRecu(ret, root->KJ);
+}
+
 tuple<vector<tuple<int, int, int>>, float> triangulate(const vector<Point> &points) {
     float triagCost = 0.0f;
     vector<tuple<int, int, int>> triangles;
-
     unsigned n = points.size();
     vector<vector<float>> C(n, std::vector<float>(n, 0.0f));
-    vector<vector<vector<tuple<int, int, int>>>> trigs(n, vector<vector<tuple<int, int, int>>>(n,
-                                                                                               vector<tuple<int, int, int>>(
-                                                                                                       1,
-                                                                                                       make_tuple(0, 0,
-                                                                                                                  0))));
-    //C.assign(n, std::vector<float>(n, 0.0f));
-    //trigs.assign(n, vector<tuple<int, int, int>>(n, make_tuple(0,0,0)));
+    trigNode blobTrigus;
+    blobTrigus.newTrig = make_tuple(-1,-1,-1);
+    blobTrigus.IK = nullptr;
+    blobTrigus.KJ = nullptr;
+
+    vector<vector<trigNode>> trigus (n, vector<trigNode>(n, blobTrigus));
+
     // TODO: Implement a parallel dynamic programming approach for triangulation.
     // Fill variables triagCost and triangles.
     // triagCost: the cost of the triangulation.
     // triangles: vector of triangles. Each triangle is represented by indices (into points vector) of its corner points.
-        for (int diff = 0; diff < n; ++diff) {
-            int i = 0;
-            for (int j = diff; j < n; i++, j++) {
+//#pragma omp declare reduction(minimum : struct compare : omp_out = omp_in.cost < omp_out.cost ? omp_in : omp_out)
+
+    for (int diff = 0; diff < n; ++diff) {
+            //std::cout << "NEW DIFF " << diff << "\n";
+#pragma omp parallel for if(n > 500) schedule(dynamic) shared(C,trigus)
+            for (int j = diff; j < n; j++) {
+                int i = j - diff;
                 if (j < i + 2) {
                     C[i][j] = 0.0;
                 } else {
+                    //float cost = numeric_limits<float>::max();
                     C[i][j] = numeric_limits<float>::max();
-                    #pragma omp parallel for schedule(static) shared(C,trigs)
+                    /*compare cmp;
+                    cmp.cost = numeric_limits<float>::max();
+                    cmp.index = -1;*/
+                    float cost = numeric_limits<float>::max();
+                    float minCost = numeric_limits<float>::max();
+                    int index = 0;
+                    vector<bool> minIndex (j, false);
+
+#pragma omp simd reduction (min:cost)
                     for (int k = i + 1; k < j; ++k) {
-                        float cost = C[i][k] + C[k][j] + dist(points[i], points[k]) + dist(points[k], points[j]) +
+                        cost = C[i][k] + C[j][k] + dist(points[i], points[k]) + dist(points[k], points[j]) +
                                      dist(points[j], points[i]);
-                        if (C[i][j] > cost) {
-                            #pragma omp critical
-                            {
-                                if (C[i][j] > cost) {
-                                    C[i][j] = cost;
-                                    trigs[i][j].clear();
-                                    trigs[i][j].push_back(make_tuple(i, j, k));
-                                    if (C[i][k] != 0.0) {
-                                        trigs[i][j].insert(trigs[i][j].end(), trigs[i][k].begin(), trigs[i][k].end());
-                                    }
-                                    if (C[k][j] != 0.0) {
-                                        trigs[i][j].insert(trigs[i][j].end(), trigs[k][j].begin(), trigs[k][j].end());
-                                    }
-                                }
-                            }
+
+                        /*cost = C[i][k] + C[j][k] +
+                               sqrt((points[i].x-points[k].x)*(points[i].x-points[k].x) + (points[i].y-points[k].y)*(points[i].y-points[k].y)) +
+                               sqrt(points[k].x-points[j].x*points[k].x-points[j].x + points[k].y-points[j].y*points[k].y-points[j].y) +
+                               sqrt(points[j].x-points[i].x*points[j].x-points[i].x + points[j].y-points[i].y*points[j].y-points[i].y);*/
+                        minIndex[k] = cost < minCost;
+                        minCost = min(cost, minCost);
+
+                        /*if(cost < minCost){
+                            index = k;
+                            minCost = cost;
+                        }*/
+                    }
+                    for (int k = j-1; k >= i+1; --k) {
+                        if(minIndex[k]){
+                            index = k;
+                            break;
                         }
                     }
+                        {
+                            if (C[i][j] > minCost) {
+                                C[i][j] = minCost;
+                                C[j][i] = minCost;
+                                trigus[i][j].newTrig = make_tuple(i, j, index);
+                                trigus[i][j].IK = &trigus[i][index];
+                                trigus[i][j].KJ = &trigus[index][j];
+                            }
+                        }
                 }
+                ++i;
             }
         }
 
+        std::vector <tuple<int, int, int>> ret;
+
+    searchRecu(ret, &trigus[0][n-1]);
+
+        //std::cout << std::endl;
+
+    //}
+
     triagCost = C[0][n-1];
-    triangles = trigs[0][n-1];
+    triangles = ret;
 	return make_tuple(move(triangles), triagCost);
 }
+
+
 
 vector<Point> readProblem(const string &inputFile) {
 	vector<Point> points;

@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/InstanceGenerator.dir/home/japaw/Codes/B4M35PAG/hw_2_code_skeletons/src/InstanceGenerator.cpp.o"
+  "CMakeFiles/InstanceGenerator.dir/mnt/c/Users/JakubJíra/Codes/B4M35PAG/hw_2_code_skeletons/src/InstanceGenerator.cpp.o"
   "InstanceGenerator"
   "InstanceGenerator.pdb"
 )
