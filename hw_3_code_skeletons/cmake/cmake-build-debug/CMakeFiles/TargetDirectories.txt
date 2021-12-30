@@ -1,3 +1,3 @@
-/home/japaw/Codes/B4M35PAG/hw_3_code_skeletons/cmake/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/japaw/Codes/B4M35PAG/hw_3_code_skeletons/cmake/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/japaw/Codes/B4M35PAG/hw_3_code_skeletons/cmake/cmake-build-debug/CMakeFiles/HeatDiffusion.dir
+/mnt/c/Users/JakubJíra/Codes/B4M35PAG/hw_3_code_skeletons/cmake/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/JakubJíra/Codes/B4M35PAG/hw_3_code_skeletons/cmake/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/c/Users/JakubJíra/Codes/B4M35PAG/hw_3_code_skeletons/cmake/cmake-build-debug/CMakeFiles/HeatDiffusion.dir
