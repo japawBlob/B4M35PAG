@@ -122,6 +122,7 @@ int main(int argc, char **argv) {
 
         for (auto blob: spots) {
             temp[blob.mY][blob.mX] = blob.mTemperature;
+            blobMatrix[blob.mY][blob.mX] = blob.mTemperature;
             permaSpots[blob.mY][blob.mX] = true;
             std::cout << "x: " << blob.mX << "  | y: " << blob.mY << "  | temperature: " << blob.mTemperature
                       << std::endl;
@@ -145,193 +146,133 @@ int main(int argc, char **argv) {
             int i = 0, j = 0;
 
             //roh v levo nahore
-            blobMatrix[i][j] = temp[i][j];
-            temp[i][j] = (temp[i][j] + temp[i][j + 1] + temp[i + 1][j] + temp[i + 1][j + 1]) / 4;
-            if (/*checkForContinue && */abs(blobMatrix[i][j] - temp[i][j]) > limite) {
-                bool skip = false;
-                for (auto blob: spots) {
-                    if (i == blob.mY && j == blob.mX) {
-                        temp[i][j] = blob.mTemperature;
-                        skip = true;
-                    }
-                }
-                if (!skip) {
-                    //std::cout << "1)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
+            if(!permaSpots[i][j]) {
+                blobMatrix[i][j] = temp[i][j];
+                temp[i][j] = (temp[i][j] + temp[i][j + 1] + temp[i + 1][j] + temp[i + 1][j + 1]) / 4;
+                if (checkForContinue && abs(blobMatrix[i][j] - temp[i][j]) > limite) {
+
                     continueComputation = true;
                     checkForContinue = false;
                 }
             }
-
             //prvni radek
             for (j = 1; j < width - 1; ++j) {
-                blobMatrix[i][j] = temp[i][j];
-                temp[i][j] = (blobMatrix[i][j - 1] + temp[i][j] + temp[i][j + 1] + temp[i + 1][j - 1] + temp[i + 1][j] +
-                              temp[i + 1][j + 1]) / 6;
-                if (/*checkForContinue &&*/ (abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
-                    bool skip = false;
-                    for (auto blob: spots) {
-                        if (i == blob.mY && j == blob.mX) {
-                            temp[i][j] = blob.mTemperature;
-                            skip = true;
-                        }
-                    }
-                    if (!skip) {
-                        //std::cout << "2)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
+                if(!permaSpots[i][j]) {
+
+                    blobMatrix[i][j] = temp[i][j];
+                    temp[i][j] =
+                            (blobMatrix[i][j - 1] + temp[i][j] + temp[i][j + 1] + temp[i + 1][j - 1] + temp[i + 1][j] +
+                             temp[i + 1][j + 1]) / 6;
+                    if (checkForContinue && (abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
+                            //std::cout << "2)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
                         continueComputation = true;
                         checkForContinue = false;
+
                     }
                 }
             }
 
             //roh v pravo nahore
-            blobMatrix[i][j] = temp[i][j];
-            temp[i][j] = (blobMatrix[i][j - 1] + temp[i][j] + temp[i+1][j] + temp[i + 1][j - 1]) / 4;
-            if (/*checkForContinue && */(abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
-                bool skip = false;
-                for (auto blob: spots) {
-                    if (i == blob.mY && j == blob.mX) {
-                        temp[i][j] = blob.mTemperature;
-                        skip = true;
-                    }
-                }
-                if (!skip) {
-                    //std::cout << "3)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
+            if(!permaSpots[i][j]) {
+
+                blobMatrix[i][j] = temp[i][j];
+                temp[i][j] = (blobMatrix[i][j - 1] + temp[i][j] + temp[i + 1][j] + temp[i + 1][j - 1]) / 4;
+                if (checkForContinue && (abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
+
+                        //std::cout << "3)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
                     continueComputation = true;
                     checkForContinue = false;
+
                 }
             }
             //hlavni cast matice
             for (i = 1; i < height - 1; ++i) {
                 j = 0;
                 //levy kraj
-                blobMatrix[i][j] = temp[i][j];
-                temp[i][j] =
-                        (blobMatrix[i - 1][j] + blobMatrix[i - 1][j + 1] + temp[i][j] + temp[i][j + 1] +
-                         temp[i + 1][j] +
-                         temp[i + 1][j + 1]) / 6;
-                if (/*checkForContinue && */(abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
-                    bool skip = false;
-                    for (auto blob: spots) {
-                        if (i == blob.mY && j == blob.mX) {
-                            temp[i][j] = blob.mTemperature;
-                            skip = true;
-                        }
-                    }
-                    if (!skip) {
-                        //std::cout << "4)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
+                if(!permaSpots[i][j]) {
+                    blobMatrix[i][j] = temp[i][j];
+                    temp[i][j] =
+                            (blobMatrix[i - 1][j] + blobMatrix[i - 1][j + 1] + temp[i][j] + temp[i][j + 1] +
+                             temp[i + 1][j] +
+                             temp[i + 1][j + 1]) / 6;
+                    if (checkForContinue && (abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
                         continueComputation = true;
                         checkForContinue = false;
+
                     }
                 }
                 //radek
                 for (j = 1; j < width - 1; ++j) {
-                    blobMatrix[i][j] = temp[i][j];
-                    temp[i][j] = (blobMatrix[i - 1][j - 1] + blobMatrix[i - 1][j] + blobMatrix[i - 1][j + 1] +
-                                  blobMatrix[i][j - 1] + temp[i][j] + temp[i][j + 1] + temp[i + 1][j - 1] +
-                                  temp[i + 1][j] +
-                                  temp[i + 1][j + 1]) / 9;
-                    //temperatures.push_back(temp[i][j]);
+                    if(!permaSpots[i][j]) {
 
-                    if (/*checkForContinue && */(abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
-                        bool skip = false;
-                        for (auto blob: spots) {
-                            //std::cout << "5) j: " << j << "  | i: " << i << "  | x: " << blob.mX << "  | y: " << blob.mY << std::endl;
-                            if (i == blob.mY && j == blob.mX) {
-                                temp[i][j] = blob.mTemperature;
-                                skip = true;
-                                break;
-                            }
-                        }
-                        if (!skip) {
-                            //std::cout << "5)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << "  | temp: " << blobMatrix[i][j] << std::endl;
+                        blobMatrix[i][j] = temp[i][j];
+                        temp[i][j] = (blobMatrix[i - 1][j - 1] + blobMatrix[i - 1][j] + blobMatrix[i - 1][j + 1] +
+                                      blobMatrix[i][j - 1] + temp[i][j] + temp[i][j + 1] + temp[i + 1][j - 1] +
+                                      temp[i + 1][j] +
+                                      temp[i + 1][j + 1]) / 9;
+                        //temperatures.push_back(temp[i][j]);
+
+                        if (checkForContinue && (abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
                             continueComputation = true;
                             checkForContinue = false;
+
                         }
                     }
                 }
                 // pravy kraj radku
-                blobMatrix[i][j] = temp[i][j];
-                temp[i][j] = (blobMatrix[i - 1][j - 1] + blobMatrix[i - 1][j] + blobMatrix[i][j - 1] + temp[i][j] +
-                              temp[i + 1][j - 1] + temp[i + 1][j]) / 6;
-                if (/*checkForContinue && */(abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
-                    bool skip = false;
-                    for (auto blob: spots) {
-                        if (i == blob.mY && j == blob.mX) {
-                            temp[i][j] = blob.mTemperature;
-                            skip = true;
-                        }
-                    }
-                    if (!skip) {
-                        //std::cout << "6)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
+                if(!permaSpots[i][j]) {
+                    blobMatrix[i][j] = temp[i][j];
+                    temp[i][j] = (blobMatrix[i - 1][j - 1] + blobMatrix[i - 1][j] + blobMatrix[i][j - 1] + temp[i][j] +
+                                  temp[i + 1][j - 1] + temp[i + 1][j]) / 6;
+                    if (checkForContinue && (abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
                         continueComputation = true;
                         checkForContinue = false;
+
                     }
                 }
             }
             //levy dolni roh
             j = 0;
-            blobMatrix[i][j] = temp[i][j];
-            temp[i][j] = (blobMatrix[i - 1][j] + blobMatrix[i - 1][j + 1] + temp[i][j] + temp[i][j + 1]) / 4;
-            if (/*checkForContinue && */(abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
-                bool skip = false;
-                for (auto blob: spots) {
-                    if (i == blob.mY && j == blob.mX) {
-                        temp[i][j] = blob.mTemperature;
-                        skip = true;
-                    }
-                }
-                if (!skip) {
-                    //std::cout << "7)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
+            if(!permaSpots[i][j]) {
+                blobMatrix[i][j] = temp[i][j];
+                temp[i][j] = (blobMatrix[i - 1][j] + blobMatrix[i - 1][j + 1] + temp[i][j] + temp[i][j + 1]) / 4;
+                if (checkForContinue && (abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
                     continueComputation = true;
                     checkForContinue = false;
+
                 }
             }
             //posledni radek
             for (j = 1; j < width - 1; ++j) {
-                blobMatrix[i][j] = temp[i][j];
-                temp[i][j] =
-                        (blobMatrix[i - 1][j - 1] + blobMatrix[i - 1][j] + blobMatrix[i - 1][j + 1] +
-                         blobMatrix[i][j - 1] +
-                         temp[i][j] + temp[i][j + 1]) / 6;
-                //temperatures.push_back(temp[i][j]);
+                if(!permaSpots[i][j]) {
 
-                if (/*checkForContinue && */(abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
-                    bool skip = false;
-                    for (auto blob: spots) {
-                        if (i == blob.mY && j == blob.mX) {
-                            temp[i][j] = blob.mTemperature;
-                            skip = true;
-                        }
-                    }
-                    if (!skip) {
-                        //std::cout << "8)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
+                    blobMatrix[i][j] = temp[i][j];
+                    temp[i][j] =
+                            (blobMatrix[i - 1][j - 1] + blobMatrix[i - 1][j] + blobMatrix[i - 1][j + 1] +
+                             blobMatrix[i][j - 1] +
+                             temp[i][j] + temp[i][j + 1]) / 6;
+                    //temperatures.push_back(temp[i][j]);
+
+                    if (checkForContinue && (abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
                         continueComputation = true;
                         checkForContinue = false;
+
                     }
                 }
             }
             // pravy dolni roh
-            blobMatrix[i][j] = temp[i][j];
-            temp[i][j] = (blobMatrix[i - 1][j - 1] + blobMatrix[i - 1][j] + blobMatrix[i][j - 1] + temp[i][j]) / 4;
-            if (/*checkForContinue && */(abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
-                bool skip = false;
-                for (auto blob: spots) {
-                    if (i == blob.mY && j == blob.mX) {
-                        temp[i][j] = blob.mTemperature;
-                        skip = true;
-                    }
-                }
-                if (!skip) {
-                    //std::cout << "9)      x: " << j << "  | y: " << i << "  | delta: " << abs(blobMatrix[i][j] - temp[i][j]) << std::endl;
+            if(!permaSpots[i][j]) {
+                blobMatrix[i][j] = temp[i][j];
+                temp[i][j] = (blobMatrix[i - 1][j - 1] + blobMatrix[i - 1][j] + blobMatrix[i][j - 1] + temp[i][j]) / 4;
+                if (checkForContinue && (abs(blobMatrix[i][j] - temp[i][j]) > limite)) {
                     continueComputation = true;
                     checkForContinue = false;
                 }
             }
-
-            for (auto blob: spots) {
+            /*for (auto blob: spots) {
                 temp[blob.mY][blob.mX] = blob.mTemperature;
                 blobMatrix[blob.mY][blob.mX] = blob.mTemperature;
-            }
+            }*/
         } while (continueComputation);
 
 
