@@ -1,4 +1,4 @@
-/snap/clion/175/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/175/bin/ninja/linux/ninja -G Ninja /home/japaw/Codes/B4M35PAG/semproj_code_skeleton/cmake-openmp
+/snap/clion/178/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/178/bin/ninja/linux/ninja -G Ninja /home/japaw/Codes/B4M35PAG/semproj_code_skeleton/cmake-openmp
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/japaw/Codes/B4M35PAG/semproj_code_skeleton/cmake-openmp/cmake-build-debug

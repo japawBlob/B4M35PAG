@@ -78,34 +78,34 @@ void printHelpPage(char *program) {
 
 int main(int argc, char **argv) {
     // Initialize MPI
-    //MPI_Init(&argc, &argv);
-    //int worldSize, myRank;
-    //MPI_Comm_size(MPI_COMM_WORLD, &worldSize);
-    //MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+    MPI_Init(&argc, &argv);
+    int worldSize, myRank;
+    MPI_Comm_size(MPI_COMM_WORLD, &worldSize);
+    MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
-    //cout << "My rank: " << myRank << endl;
+    cout << "My rank: " << myRank << endl;
 
     if (argc == 1) {
-        //if (myRank == 0) {
+        if (myRank == 0) {
             printHelpPage(argv[0]);
-        //}
-        //MPI_Finalize();
+        }
+        MPI_Finalize();
         exit(0);
     } else if (argc != 3) {
-        //if (myRank == 0) {
+        if (myRank == 0) {
             printHelpPage(argv[0]);
-        //}
-        //MPI_Finalize();
+        }
+        MPI_Finalize();
         exit(1);
     }
 
     // Read the input instance.
     int width, height;  // Width and height of the matrix.
     vector<Spot> spots; // Spots with permanent temperature.
-    //if (myRank == 0) {
+    if (myRank == 0) {
         tie(width, height, spots) = readInstance(argv[1]);
-    //}
-    //if(myRank == 0) {
+    }
+    if(myRank == 0) {
         high_resolution_clock::time_point start = high_resolution_clock::now();
 
 
@@ -295,12 +295,12 @@ int main(int argc, char **argv) {
         double totalDuration = duration_cast<duration<double>>(high_resolution_clock::now() - start).count();
         cout << "computational time: " << totalDuration << " s" << endl;
 
-        //if (myRank == 0) {
+        if (myRank == 0) {
             string outputFileName(argv[2]);
             writeOutput(0, width, height, outputFileName, temperatures);
-        //}
-    //}
-    //MPI_Finalize();
+        }
+    }
+    MPI_Finalize();
     exit(0);
     return 0;
 }
