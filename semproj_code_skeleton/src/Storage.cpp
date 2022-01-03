@@ -10,6 +10,8 @@ using namespace std;
 struct graphNode {
     bool isConnected;
     int name;
+    int minEdge;
+    int parent;
 };
 struct edge{
     int cost;
@@ -105,67 +107,60 @@ int levensteinDist(vector<int> w1, vector<int> w2, int ** D){
 
 int ** graph;
 
-
-void printMST(int from[], int n, int ** graph)
+//Stolen from geeksforgeeks.org https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
+void printMST(int parent[], int numberOfRecords, int ** graph)
 {
-    int i;
     printf("Edge   Weight\n");
-    for (i = 1; i < n; i++)
-        printf("%d - %d    %d \n", from[i], i, graph[i][from[i]]);
+    for (int i = 1; i < numberOfRecords; i++)
+        printf("%d - %d    %d \n", parent[i], i, graph[i][parent[i]]);
 }
 
-int minKey(const int key[],const int visited[], const unsigned numberOfRecords) {
-    int min = INT_MAX, index = -1, i;
+pair<int,int> findMinimalEdge(const vector<graphNode> & graphNodes) {
+    int min = INT_MAX;
+    int index = -1;
+    unsigned numberOfRecords = graphNodes.size();
 #pragma omp parallel
     {
-        int index_local = index;
-        int min_local = min;
-#pragma omp for nowait
-        for (i = 0; i < numberOfRecords; i++) {
-            if (visited[i] == 0 && key[i] < min_local) {
-                min_local = key[i];
-                index_local = i;
+        int localIndex = index;
+        int localMin = min;
+#pragma omp for
+        for (int i = 0; i < numberOfRecords; i++) {
+            if (!graphNodes[i].isConnected && graphNodes[i].minEdge < localMin) {
+                localMin = graphNodes[i].minEdge;
+                localIndex = i;
             }
         }
 #pragma omp critical
         {
-            if (min_local < min) {
-                min = min_local;
-                index = index_local;
+            if (localMin < min) {
+                min = localMin;
+                index = localIndex;
             }
         }
     }
-    return index;
+    return make_pair(index,min);
 }
 
-int primMST(const unsigned numberOfRecords)
-{
-    int from[numberOfRecords];
-    int key[numberOfRecords], num_threads;
-    int visited[numberOfRecords];
-    int i, count;
-    for (i = 0; i < numberOfRecords; i++)
-        key[i] = INT_MAX, visited[i] = 0;
+int primParallel(const unsigned numberOfRecords){
+    vector<graphNode> graphNodes (numberOfRecords, {false,0,INT_MAX,-1});
+    for (int i = 0; i < numberOfRecords; i++){
+        graphNodes[i].name = i;
+    }
     int totalCost = 0;
-    key[0] = 0;
-    from[0] = -1;
+    graphNodes[0].minEdge = 0;
 
-    for (count = 0; count < numberOfRecords - 1; count++){
-        int u = minKey(key, visited, numberOfRecords);
-        visited[u] = 1;
-        //totalCost += key[u];
-        int v;
+    for (int i = 0; i < numberOfRecords; i++){
+        pair<int,int> blob = findMinimalEdge(graphNodes);
+        int currentNode = blob.first;
+        totalCost += blob.second;
+        graphNodes[currentNode].isConnected = true;
 
 #pragma omp parallel for schedule(static)
-        for (v = 0; v < numberOfRecords; v++) {
-            if (/*graph[u][v] && */visited[v] == 0 && graph[u][v] < key[v])
-                from[v] = u, key[v] = graph[u][v];
+        for (int j = 0; j < numberOfRecords; j++) {
+            if (!graphNodes[j].isConnected && graph[currentNode][j] < graphNodes[j].minEdge)
+                graphNodes[j].parent = currentNode, graphNodes[j].minEdge = graph[currentNode][j];
         }
     }
-    //printMST(from, numberOfRecords, graph);
-    //printf("\n%d threads are created in primMST\n", num_threads);
-    for (i = 1; i < numberOfRecords; i++)
-        totalCost += graph[i][from[i]];
     return totalCost;
 }
 
@@ -178,32 +173,30 @@ int main(int argc, char *argv[]) {
     //printRecords(records);
 
     const unsigned numberOfRecords = records.size();
-    graphNode graphNodes [numberOfRecords];
     graph = new int*[numberOfRecords];
     for (int i = 0; i < numberOfRecords; ++i) {
         graph[i] = new int[numberOfRecords];
     }
-    auto timer = Stopwatch();
-    auto timer1 = Stopwatch();
+    //auto timer = Stopwatch();
+    //auto timer1 = Stopwatch();
 
     /*vector<int> blob1 = records[1];
     vector<int> blob2 = records[8];*/
 
-    timer.start();
-    timer1.start();
+    //timer.start();
+    //timer1.start();
     //cout << timer1.duration().count() << "ms\n";
 
-    #pragma omp parallel shared(graph, graphNodes, records)
+    #pragma omp parallel shared(graph, records)
     {
         #pragma omp for schedule(dynamic)
         for (int i = 0; i < numberOfRecords; ++i) {
             //if(i%1000 == 0) cout << i << " " << timer1.duration().count() << "ms\n";
             graph[i][i] = 0;
-            graphNodes[i] = {false, i};
             vector<int> record = records[i];
             for (int j = i + 1; j < numberOfRecords; ++j) {
-                //int dist = LevenshteinDistance(record, records[j]);
-                int dist = levensteinDist(record, records[j]);
+                int dist = LevenshteinDistance(record, records[j]);
+                //int dist = levensteinDist(record, records[j]);
                 /*std::string sw1;
                 for (auto blob : records[i]) {
                     sw1 += static_cast<char>(blob+48);
@@ -218,8 +211,8 @@ int main(int argc, char *argv[]) {
             }
         }
     }
-    timer1.stop();
-    cout << "time for levensthein: " << timer1.duration().count() << "ms\n";
+    //timer1.stop();
+    //cout << "time for levensthein: " << timer1.duration().count() << "ms\n";
 
     /*for(int i = 0; i<numberOfRecords; i++){
         for(int j = 0; j<numberOfRecords; j++){
@@ -235,7 +228,7 @@ int main(int argc, char *argv[]) {
         }
         cout << endl;
     }*/
-    auto timer2 = Stopwatch();
+/*    auto timer2 = Stopwatch();
     timer2.start();
     priority_queue<edge> prioQueue;
     int from [numberOfRecords];
@@ -269,21 +262,23 @@ int main(int argc, char *argv[]) {
             };
             prioQueue.push(blob);
         }
-    }
+    }*/
     //printMST(from,numberOfRecords,graph);
-    treeCost = 0;
+    /*int treeCost = 0;
     for (int i = 1; i < numberOfRecords; i++)
         treeCost += graph[i][from[i]];
-    cout << treeCost <<" time for minimum spanning tree seq: " << timer2.duration().count() << "ms\n";
-    int blobTreeCost = primMST(numberOfRecords);
-    timer2.stop();
-    cout << "time for minimum spanning tree par: " << timer2.duration().count() << "ms\n";
+    cout << treeCost <<" time for minimum spanning tree seq: " << timer2.duration().count() << "ms\n";*/
+    //auto timer2 = Stopwatch();
+    //timer2.start();
+    int blobTreeCost = primParallel(numberOfRecords);
+    //timer2.stop();
+    //cout << "time for minimum spanning tree par: " << timer2.duration().count() << "ms\n";
 
 
     // TODO: fill the treeCost variable with the MST of the records' edit distances graph.
-    timer.stop();
+    //timer.stop();
 
-    cout << blobTreeCost << " time: " << timer.duration().count() << endl;
+    //cout << blobTreeCost << " time: " << timer.duration().count() << endl;
     writeCost(blobTreeCost, programArguments.mOutputFilePath);
     for (int i = 0; i < numberOfRecords; ++i) {
         delete [] graph[i];
